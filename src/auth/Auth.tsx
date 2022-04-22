@@ -1,3 +1,4 @@
+import { Box, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
@@ -34,9 +35,9 @@ const Auth = () => {
         }
     }, [accessToken]);
     return (
-        <div>
-            <h1>Auth Waiting...</h1>
-        </div>
+        <Box textAlign={"center"}>
+            <Typography variant="h4">Auth Waiting...</Typography>
+        </Box>
     );
 };
 

@@ -1,16 +1,30 @@
 import { atom } from "recoil";
 
-export const periodFilterRecoil = atom<string>({
-	key: "periodFilterRecoil",
-	default: "",
+interface Email {
+    title: string;
+    sender: string;
+    date: string;
+}
+
+export const periodFilterRecoilAtom = atom<{
+    start: string | null;
+    end: string | null;
+}>({
+    key: "periodFilterRecoilAtom",
+    default: { start: null, end: null },
 });
 
-export const senderFilterRecoil = atom<string[]>({
-	key: "senderFilterRecoil",
-	default: [],
+export const senderFilterRecoilAtom = atom<string[]>({
+    key: "senderFilterRecoilAtom",
+    default: [],
 });
 
-export const keywordFilterRecoil = atom<string[]>({
-	key: "keywordFilterRecoil",
-	default: [],
+export const keywordFilterRecoilAtom = atom<string[]>({
+    key: "keywordFilterRecoilAtom",
+    default: [],
+});
+
+export const filteredEmailsRecoilAtom = atom<Email[]>({
+    key: "filteredEmailsRecoilAtom",
+    default: [],
 });
