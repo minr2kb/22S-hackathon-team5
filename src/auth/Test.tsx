@@ -8,8 +8,9 @@ const Test = () => {
     const authToken = useRecoilValue(authTokenAtom);
     const [emailList, setEmailList] = useRecoilState<any>(emailListAtom);
     const handleClick = async () => {
-        const d = await getUsersMail(authToken, "zerosheepmoo@gmail.com");
+        const d = await getUsersMail(authToken, "kbmin1129@gmail.com");
         setEmailList(d);
+        console.log(d);
     };
     return <button onClick={handleClick}>Test</button>;
 };

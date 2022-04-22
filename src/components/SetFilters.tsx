@@ -59,7 +59,7 @@ const SetFilters: React.FC<SetFiltersProps> = ({ handleNext }) => {
         setTimeout(() => {
             setLoading(false);
             handleNext();
-        }, 3000);
+        }, 1000);
     };
 
     return (
@@ -284,12 +284,10 @@ const SetFilters: React.FC<SetFiltersProps> = ({ handleNext }) => {
                     </AccordionDetails>
                 </Accordion>
             </Box>
-            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+            <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3 }}>
                 <LoadingButton
                     onClick={handleFilter}
-                    // endIcon={<Send />}
                     loading={loading}
-                    // loadingPosition="end"
                     variant="contained"
                 >
                     Next

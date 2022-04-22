@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import CommonLayout from "../layout/CommonLayout";
 import SetFilters from "../components/SetFilters";
+import CheckEmails from "../components/CheckEmails";
 
 const steps = ["Set Filters", "Check Emails", "Delete Emails"];
 
@@ -98,6 +99,12 @@ const Filter = () => {
                         </Box>
                     </Fade>
                     {activeStep === 0 && <SetFilters handleNext={handleNext} />}
+                    {activeStep === 1 && (
+                        <CheckEmails
+                            handleNext={handleNext}
+                            handleBack={handleBack}
+                        />
+                    )}
                 </Box>
             </Box>
         </CommonLayout>
