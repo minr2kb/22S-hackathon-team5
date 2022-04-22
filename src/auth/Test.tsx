@@ -1,6 +1,6 @@
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { getUsersMail } from "../apis/getUsersMail";
+import { getUsersMail } from "../apis/getUserMails";
 import { authTokenAtom } from "../recoils/auth";
 import { emailListAtom } from "../recoils/emails";
 
