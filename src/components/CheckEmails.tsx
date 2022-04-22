@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import { Box, Button } from "@mui/material";
 
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Send } from "@mui/icons-material";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
 import {
     periodFilterRecoilAtom,
     senderFilterRecoilAtom,
@@ -16,7 +11,7 @@ import {
 } from "../recoils/filter";
 import { useRecoilState } from "recoil";
 
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridSelectionModel } from "@mui/x-data-grid";
 
 const columns: GridColDef[] = [
     { field: "id", headerName: "ID", width: 70 },
@@ -24,30 +19,17 @@ const columns: GridColDef[] = [
         field: "title",
         headerName: "Title",
         width: 280,
-        // editable: true,
     },
     {
         field: "sender",
         headerName: "Sender",
         width: 200,
-        // editable: true,
     },
     {
         field: "date",
         headerName: "Date",
-        // type: "number",
         width: 120,
-        // editable: true,
     },
-    // {
-    //     field: "fullName",
-    //     headerName: "Full name",
-    //     description: "This column has a value getter and is not sortable.",
-    //     sortable: false,
-    //     width: 160,
-    //     valueGetter: (params: GridValueGetterParams) =>
-    //         `${params.row.firstName || ""} ${params.row.lastName || ""}`,
-    // },
 ];
 
 const rows = [
@@ -81,6 +63,10 @@ const CheckEmails: React.FC<CheckEmailsProps> = ({
     handleBack,
 }) => {
     const [loading, setLoading] = useState(false);
+    const [selectionModel, setSelectionModel] = useState<GridSelectionModel>(
+        Array.from(Array(4).keys())
+    );
+
     return (
         <>
             <Box sx={{ width: "100%", height: "55vh" }}>
@@ -91,6 +77,8 @@ const CheckEmails: React.FC<CheckEmailsProps> = ({
                     rowsPerPageOptions={[100]}
                     checkboxSelection
                     // disableSelectionOnClick
+                    onSelectionModelChange={(model) => setSelectionModel(model)}
+                    selectionModel={selectionModel}
                 />
             </Box>
             <Box
