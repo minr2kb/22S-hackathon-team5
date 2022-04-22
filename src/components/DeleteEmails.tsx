@@ -8,15 +8,15 @@ interface DeleteEmailsProps {
 const DeleteEmails: React.FC<DeleteEmailsProps> = ({ handleBack }) => {
     return (
         <>
-            <img
-                style={{
+            <Box
+                sx={{
                     width: "100%",
                     height: "55vh",
-                    objectFit: "scale-down",
+
+                    backgroundImage: `url(${process.env.REACT_APP_RESOURCE_PATH}/mail-pile.webp)`,
+                    backgroundRepeat: "repeat",
                 }}
-                alt="mail-pile"
-                src={`${process.env.REACT_APP_RESOURCE_PATH}/mail-pile.webp`}
-            />
+            ></Box>
 
             <Box
                 sx={{ display: "flex", justifyContent: "space-between", mt: 3 }}

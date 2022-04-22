@@ -20,6 +20,7 @@ import {
     senderFilterRecoilAtom,
     keywordFilterRecoilAtom,
     filteredEmailsRecoilAtom,
+    etcFilterRecoilAtom,
 } from "../recoils/filter";
 import { useRecoilState } from "recoil";
 
@@ -37,6 +38,7 @@ const SetFilters: React.FC<SetFiltersProps> = ({ handleNext }) => {
     const [keywordFilter, setKeywordFilter] = useRecoilState(
         keywordFilterRecoilAtom
     );
+    const [etcFilter, setEtcFilter] = useRecoilState(etcFilterRecoilAtom);
     const [filteredEmails, setFilteredEmails] = useRecoilState(
         filteredEmailsRecoilAtom
     );
@@ -168,9 +170,14 @@ const SetFilters: React.FC<SetFiltersProps> = ({ handleNext }) => {
                         <Typography sx={{ fontWeight: 600, p: 1 }}>
                             By Sender
                         </Typography>
-                        <Typography sx={{ p: 1 }}>
-                            {senderFilter.length} items
-                        </Typography>
+
+                        <Chip
+                            sx={{ mt: 0.5 }}
+                            color={
+                                senderFilter.length > 0 ? "primary" : "default"
+                            }
+                            label={`${senderFilter.length} items`}
+                        />
                     </AccordionSummary>
                     <AccordionDetails sx={{ ml: 1, mb: 3 }}>
                         {senderFilter.map((sender: string, idx: number) => (
@@ -229,9 +236,13 @@ const SetFilters: React.FC<SetFiltersProps> = ({ handleNext }) => {
                         <Typography sx={{ fontWeight: 600, p: 1 }}>
                             By Keyword
                         </Typography>
-                        <Typography sx={{ p: 1 }}>
-                            {keywordFilter.length} items
-                        </Typography>
+                        <Chip
+                            sx={{ mt: 0.5 }}
+                            color={
+                                keywordFilter.length > 0 ? "primary" : "default"
+                            }
+                            label={`${keywordFilter.length} items`}
+                        />
                     </AccordionSummary>
                     <AccordionDetails sx={{ ml: 1, mb: 3 }}>
                         {keywordFilter.map((keyword: string, idx: number) => (
@@ -281,6 +292,81 @@ const SetFilters: React.FC<SetFiltersProps> = ({ handleNext }) => {
                         >
                             add+
                         </Button>
+                    </AccordionDetails>
+                </Accordion>
+
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                        <Typography sx={{ fontWeight: 600, p: 1 }}>
+                            ETC.
+                        </Typography>
+                        <Chip
+                            sx={{ mt: 0.5, mr: 1 }}
+                            color={etcFilter.unread ? "primary" : "default"}
+                            label={"unread"}
+                        />
+                        <Chip
+                            sx={{ mt: 0.5, mr: 1 }}
+                            color={etcFilter.attachment ? "primary" : "default"}
+                            label={"attachment"}
+                        />
+                        <Chip
+                            sx={{ mt: 0.5, mr: 1 }}
+                            color={etcFilter.permanent ? "primary" : "default"}
+                            label={"permanent"}
+                        />
+                    </AccordionSummary>
+                    <AccordionDetails sx={{ ml: 1, mb: 3 }}>
+                        <FormControlLabel
+                            label="delete unread emails"
+                            control={
+                                <Checkbox
+                                    checked={etcFilter.unread}
+                                    onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                    ) => {
+                                        setEtcFilter({
+                                            ...etcFilter,
+                                            unread: e.target.checked,
+                                        });
+                                    }}
+                                />
+                            }
+                        />
+                        <br />
+                        <FormControlLabel
+                            label="delete emails with attachment"
+                            control={
+                                <Checkbox
+                                    checked={etcFilter.attachment}
+                                    onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                    ) => {
+                                        setEtcFilter({
+                                            ...etcFilter,
+                                            attachment: e.target.checked,
+                                        });
+                                    }}
+                                />
+                            }
+                        />
+                        <br />
+                        <FormControlLabel
+                            label="delete permanently"
+                            control={
+                                <Checkbox
+                                    checked={etcFilter.permanent}
+                                    onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                    ) => {
+                                        setEtcFilter({
+                                            ...etcFilter,
+                                            permanent: e.target.checked,
+                                        });
+                                    }}
+                                />
+                            }
+                        />
                     </AccordionDetails>
                 </Accordion>
             </Box>

@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Box, Button } from "@mui/material";
 
-import LoadingButton from "@mui/lab/LoadingButton";
-
 import {
     periodFilterRecoilAtom,
     senderFilterRecoilAtom,
@@ -14,21 +12,32 @@ import { useRecoilState } from "recoil";
 import { DataGrid, GridColDef, GridSelectionModel } from "@mui/x-data-grid";
 
 const columns: GridColDef[] = [
-    { field: "id", headerName: "ID", width: 70 },
+    // { field: "id", headerName: "ID", width: 60 },
     {
         field: "title",
         headerName: "Title",
-        width: 280,
+        width: 200,
     },
     {
         field: "sender",
         headerName: "Sender",
-        width: 200,
+        width: 180,
     },
     {
         field: "date",
         headerName: "Date",
-        width: 120,
+        width: 100,
+    },
+
+    {
+        field: "attachment",
+        headerName: "Attachment",
+        width: 110,
+    },
+    {
+        field: "read",
+        headerName: "Read",
+        width: 80,
     },
 ];
 
@@ -62,7 +71,6 @@ const CheckEmails: React.FC<CheckEmailsProps> = ({
     handleNext,
     handleBack,
 }) => {
-    const [loading, setLoading] = useState(false);
     const [selectionModel, setSelectionModel] = useState<GridSelectionModel>(
         Array.from(Array(4).keys())
     );
@@ -87,13 +95,9 @@ const CheckEmails: React.FC<CheckEmailsProps> = ({
                 <Button variant="outlined" onClick={handleBack}>
                     Back
                 </Button>
-                <LoadingButton
-                    onClick={handleNext}
-                    loading={loading}
-                    variant="contained"
-                >
+                <Button onClick={handleNext} variant="contained">
                     Next
-                </LoadingButton>
+                </Button>
             </Box>
         </>
     );
