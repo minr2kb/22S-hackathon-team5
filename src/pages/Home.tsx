@@ -72,9 +72,13 @@ const Home = () => {
                                 authToken
                             );
                             if (authToken) {
-                                navigate("/filter");
+                                navigate(
+                                    `${process.env.REACT_APP_RESOURCE_PATH}/filter`
+                                );
                             } else {
-                                navigate("/auth");
+                                navigate(
+                                    `${process.env.REACT_APP_RESOURCE_PATH}/auth`
+                                );
                             }
                         }}
                     >

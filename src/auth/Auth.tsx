@@ -22,6 +22,7 @@ const Auth = () => {
                 accList[1].length - 1
             );
             setAccessToken(accessTokenValue);
+            localStorage.setItem("access", accessTokenValue);
         } else {
             oauthSignIn();
         }
@@ -29,10 +30,14 @@ const Auth = () => {
     useEffect(() => {
         if (accessToken) {
             console.log("accesstoken: ", accessToken);
-            navi("/");
+            navi(`${process.env.REACT_APP_RESOURCE_PATH}`);
         }
     }, [accessToken]);
-    return <></>;
+    return (
+        <div>
+            <h1>Auth Waiting...</h1>
+        </div>
+    );
 };
 
 export default Auth;

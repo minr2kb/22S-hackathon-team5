@@ -11,9 +11,18 @@ function App() {
         <RecoilRoot>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="filter" element={<Filter />} />
-                    <Route path="auth" element={<Auth />} />
+                    <Route
+                        path={`${process.env.REACT_APP_RESOURCE_PATH}/`}
+                        element={<Home />}
+                    />
+                    <Route
+                        path={`${process.env.REACT_APP_RESOURCE_PATH}/filter`}
+                        element={<Filter />}
+                    />
+                    <Route
+                        path={`${process.env.REACT_APP_RESOURCE_PATH}/auth`}
+                        element={<Auth />}
+                    />
                 </Routes>
             </BrowserRouter>
         </RecoilRoot>
