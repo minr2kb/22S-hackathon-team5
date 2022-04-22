@@ -26,7 +26,7 @@ export const oauthSignIn = () => {
 
     // Add form parameters as hidden input values.
     for (const p in data) {
-        var input = document.createElement("input");
+        const input = document.createElement("input");
         input.setAttribute("type", "hidden");
         input.setAttribute("name", p);
         input.setAttribute("value", data[p]);

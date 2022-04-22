@@ -23,7 +23,7 @@ const Home = () => {
                 console.log("user", fetchedUserData);
                 const fetchedProfileData = await getUserProfile(
                     authToken,
-                    fetchedUserData.email
+                    fetchedUserData.id
                 );
 
                 setProfileInfo(fetchedProfileData);

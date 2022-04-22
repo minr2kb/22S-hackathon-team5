@@ -23,7 +23,7 @@ const Auth = () => {
                 accList[1].length - 1
             );
             setAccessToken(accessTokenValue);
-            localStorage.setItem("access", accessTokenValue);
+            // localStorage.setItem("access", accessTokenValue);
         } else {
             oauthSignIn();
         }
