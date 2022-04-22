@@ -12,11 +12,14 @@ import {
 import CommonLayout from "../layout/CommonLayout";
 import SetFilters from "../components/SetFilters";
 import CheckEmails from "../components/CheckEmails";
+import { useRecoilState } from "recoil";
+import { profileInfoAtom } from "../recoils/emails";
 
 const steps = ["Set Filters", "Check Emails", "Delete Emails"];
 
 const Filter = () => {
     const [activeStep, setActiveStep] = useState<number>(0);
+    const [profile, setProfile] = useRecoilState(profileInfoAtom);
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);

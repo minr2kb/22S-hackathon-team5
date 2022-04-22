@@ -1,13 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Button, Fade } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import VideoLayout from "../layout/VideoLayout";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { authTokenAtom } from "../recoils/auth";
+import { emailInfoAtom, profileInfoAtom } from "../recoils/emails";
+import { getUserInfo } from "../apis/getUserInfo";
+import { getUserProfile } from "../apis/getUserProfile";
 
 const Home = () => {
     const navigate = useNavigate();
     const authToken = useRecoilValue(authTokenAtom);
+    const setEmailInfo = useSetRecoilState(emailInfoAtom);
+    const setProfileInfo = useSetRecoilState(profileInfoAtom);
+
+    useEffect(() => {
+        const fetchInfo = async () => {
+            if (authToken) {
+                const fetchedUserData = await getUserInfo(authToken);
+                setEmailInfo(fetchedUserData);
+
+                console.log("user", fetchedUserData);
+                const fetchedProfileData = await getUserProfile(
+                    authToken,
+                    fetchedUserData.email
+                );
+
+                setProfileInfo(fetchedProfileData);
+                console.log("profile", fetchedProfileData);
+            }
+        };
+        fetchInfo();
+    }, [authToken]);
 
     return (
         <VideoLayout>
