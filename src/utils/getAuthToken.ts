@@ -5,7 +5,7 @@ const data: { [key: string]: string } = {
     redirect_uri: `${process.env.REACT_APP_ORIGIN_URL}/22S-hackathon-team5/auth`,
     response_type: "token",
     state: "state_parameter_passthrough_value",
-    scope: "https://mail.google.com",
+    scope: "https://mail.google.com https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
     include_granted_scopes: "true",
     //   state: "pass-through value",
 };

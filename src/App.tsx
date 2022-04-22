@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import Auth from "./auth/Auth";
+import Test from "./auth/Test";
 import Filter from "./pages/Filter";
 
 import Home from "./pages/Home";
@@ -22,6 +23,10 @@ function App() {
                     <Route
                         path={`${process.env.REACT_APP_RESOURCE_PATH}/auth`}
                         element={<Auth />}
+                    />
+                    <Route
+                        path={`${process.env.REACT_APP_RESOURCE_PATH}/test`}
+                        element={<Test />}
                     />
                 </Routes>
             </BrowserRouter>

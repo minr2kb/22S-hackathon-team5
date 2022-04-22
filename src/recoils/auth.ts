@@ -1,7 +1,7 @@
 import { atom } from "recoil";
 
 export const authTokenAtom = atom<string>({
-	key: "periodFilterRecoil",
+	key: "authTokenAtom",
 	default: (() => {
         return localStorage.getItem('access') ?? ''
     })(),
