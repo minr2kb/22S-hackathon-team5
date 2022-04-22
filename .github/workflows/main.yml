@@ -23,3 +23,5 @@ jobs:
       run: |
         yarn install
         yarn deploy
+        git config --local user.email "kbmin1129@gmail.com"
+        git config --local user.name "minr2kb"
