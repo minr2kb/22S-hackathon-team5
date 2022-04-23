@@ -158,13 +158,9 @@ const Home = () => {
                                         authToken
                                     );
                                     if (authToken) {
-                                        navigate(
-                                            `${process.env.REACT_APP_RESOURCE_PATH}/filter`
-                                        );
+                                        navigate(`/filter`);
                                     } else {
-                                        navigate(
-                                            `${process.env.REACT_APP_RESOURCE_PATH}/auth`
-                                        );
+                                        navigate(`/auth`);
                                     }
                                 }}
                             >
