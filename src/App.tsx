@@ -10,24 +10,12 @@ import Home from "./pages/Home";
 function App() {
     return (
         <RecoilRoot>
-            <BrowserRouter>
+            <BrowserRouter basename={`${process.env.PUBLIC_URL}`}>
                 <Routes>
-                    <Route
-                        path={`${process.env.REACT_APP_RESOURCE_PATH}/`}
-                        element={<Home />}
-                    />
-                    <Route
-                        path={`${process.env.REACT_APP_RESOURCE_PATH}/filter`}
-                        element={<Filter />}
-                    />
-                    <Route
-                        path={`${process.env.REACT_APP_RESOURCE_PATH}/auth`}
-                        element={<Auth />}
-                    />
-                    <Route
-                        path={`${process.env.REACT_APP_RESOURCE_PATH}/test`}
-                        element={<Test />}
-                    />
+                    <Route path={`/`} element={<Home />} />
+                    <Route path={`/filter`} element={<Filter />} />
+                    <Route path={`/auth`} element={<Auth />} />
+                    <Route path={`/test`} element={<Test />} />
                 </Routes>
             </BrowserRouter>
         </RecoilRoot>
