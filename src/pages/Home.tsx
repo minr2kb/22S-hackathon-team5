@@ -79,6 +79,7 @@ const Home = () => {
                     photo: fetchedUserData.picture,
                 });
                 console.log("profile", fetchedUserData);
+                localStorage.setItem("access", authToken);
             }
         };
         fetchInfo();
