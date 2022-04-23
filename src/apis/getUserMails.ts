@@ -47,7 +47,6 @@ import axios from "axios";
 }
 
 const makeQuery = (userMailsQuery: UserMailsQuery, email: string, accessToken: string) => {
-    let inSent 
     return `?q=subject:suny OR subject:korea&email=${email}&access_token=${accessToken}`
 }
 

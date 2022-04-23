@@ -2,11 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Box, Button, Fade } from "@mui/material";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import VideoLayout from "../layout/VideoLayout";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { authTokenAtom } from "../recoils/auth";
 import { emailInfoAtom, profileInfoAtom } from "../recoils/emails";
-import { getUserInfo } from "../apis/getUserInfo";
-import { oauthSignIn } from "../utils/getAuthToken";
 import { requestToken } from "../utils/requestToken";
 
 const Home = () => {
@@ -22,6 +20,7 @@ const Home = () => {
     useEffect(() => {
         const initialize = async () => {
             if (loginClicked) {
+                alert(loca.hash);
                 if (loca.hash) {
                     const hash = loca.hash.substring(1);
                     console.log(hash);
