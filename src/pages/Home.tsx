@@ -6,6 +6,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { authTokenAtom } from "../recoils/auth";
 import { emailInfoAtom, profileInfoAtom } from "../recoils/emails";
 import { requestToken } from "../utils/requestToken";
+import { getUserInfo } from "../apis/getUserInfo";
 
 const Home = () => {
     const navigate = useNavigate();
@@ -68,9 +69,20 @@ const Home = () => {
         initialize();
     }, [loginClicked]);
 
-    useEffect(() => {
-        console.log(authToken);
-    }, [authToken]);
+    // useEffect(() => {
+    //     const fetchInfo = async () => {
+    //         if (authToken) {
+    //             const fetchedUserData = await getUserInfo(authToken);
+    //             setEmailInfo(fetchedUserData.email);
+    //             setProfileInfo({
+    //                 displayName: fetchedUserData.name,
+    //                 photo: fetchedUserData.picture,
+    //             });
+    //             console.log("profile", fetchedUserData);
+    //         }
+    //     };
+    //     fetchInfo();
+    // }, [authToken]);
 
     return (
         <VideoLayout url={`${process.env.PUBLIC_URL}/server-room.MOV`}>
@@ -141,11 +153,11 @@ const Home = () => {
                                     },
                                 }}
                                 onClick={() => {
-                                    if (authToken) {
-                                        navigate(`/filter`);
-                                    } else {
-                                        navigate(`/auth`);
-                                    }
+                                    localStorage.setItem(
+                                        "loginClicked",
+                                        "true"
+                                    );
+                                    setLoginClicked(true);
                                 }}
                             >
                                 Start →
