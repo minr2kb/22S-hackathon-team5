@@ -20,69 +20,69 @@ const Home = () => {
         return localStorage.getItem("loginClicked") ? true : false;
     });
 
-    useEffect(() => {
-        const initialize = async () => {
-            if (loginClicked) {
-                if (loca.hash) {
-                    console.log(loca.hash);
-                    const hash = loca.hash.substring(1);
-                    console.log(hash);
-                    // accesstoken
-                    const matchedStr = hash.match(/access_token=.*?&/);
-                    const accStr = matchedStr ? matchedStr[0] : "";
-                    console.log(accStr);
-                    const accList = accStr.split("=");
-                    const accessTokenValue = accList[1].substring(
-                        0,
-                        accList[1].length - 1
-                    );
-                    setAuthToken(accessTokenValue);
-
-                    // name
-                    const matchedEmail = hash.match(/name=.*?&/);
-                    const matchedName = hash.match(/name=.*?&/);
-                    const matchedPhoto = hash.match(/photo=.*?&/);
-                    const matchedEmailStr = matchedEmail ? matchedEmail[0] : "";
-                    const matchedNameStr = matchedName ? matchedName[0] : "";
-                    const matchedPhotoStr = matchedPhoto ? matchedPhoto[0] : "";
-                    const emailList = matchedEmailStr.split("=");
-                    const nameList = matchedNameStr.split("=");
-                    const photoList = matchedPhotoStr.split("=");
-                    const emailValue = emailList[1];
-                    const nameValue = nameList[1];
-                    const photoValue = photoList[1];
-                    localStorage.setItem("access", accessTokenValue);
-                    localStorage.setItem("email", emailValue);
-                    localStorage.setItem("name", nameValue);
-                    localStorage.setItem("photo", photoValue);
-
-                    setEmailInfo(emailValue);
-                    setProfileInfo({
-                        displayName: nameValue,
-                        photo: photoValue,
-                    });
-                } else {
-                    await requestToken();
-                }
-            }
-        };
-        initialize();
-    }, [loginClicked]);
-
     // useEffect(() => {
-    //     const fetchInfo = async () => {
-    //         if (authToken) {
-    //             const fetchedUserData = await getUserInfo(authToken);
-    //             setEmailInfo(fetchedUserData.email);
-    //             setProfileInfo({
-    //                 displayName: fetchedUserData.name,
-    //                 photo: fetchedUserData.picture,
-    //             });
-    //             console.log("profile", fetchedUserData);
+    //     const initialize = async () => {
+    //         if (loginClicked) {
+    //             if (loca.hash) {
+    //                 console.log(loca.hash);
+    //                 const hash = loca.hash.substring(1);
+    //                 console.log(hash);
+    //                 // accesstoken
+    //                 const matchedStr = hash.match(/access_token=.*?&/);
+    //                 const accStr = matchedStr ? matchedStr[0] : "";
+    //                 console.log(accStr);
+    //                 const accList = accStr.split("=");
+    //                 const accessTokenValue = accList[1].substring(
+    //                     0,
+    //                     accList[1].length - 1
+    //                 );
+    //                 setAuthToken(accessTokenValue);
+
+    //                 // name
+    //                 const matchedEmail = hash.match(/name=.*?&/);
+    //                 const matchedName = hash.match(/name=.*?&/);
+    //                 const matchedPhoto = hash.match(/photo=.*?&/);
+    //                 const matchedEmailStr = matchedEmail ? matchedEmail[0] : "";
+    //                 const matchedNameStr = matchedName ? matchedName[0] : "";
+    //                 const matchedPhotoStr = matchedPhoto ? matchedPhoto[0] : "";
+    //                 const emailList = matchedEmailStr.split("=");
+    //                 const nameList = matchedNameStr.split("=");
+    //                 const photoList = matchedPhotoStr.split("=");
+    //                 const emailValue = emailList[1];
+    //                 const nameValue = nameList[1];
+    //                 const photoValue = photoList[1];
+    //                 localStorage.setItem("access", accessTokenValue);
+    //                 localStorage.setItem("email", emailValue);
+    //                 localStorage.setItem("name", nameValue);
+    //                 localStorage.setItem("photo", photoValue);
+
+    //                 setEmailInfo(emailValue);
+    //                 setProfileInfo({
+    //                     displayName: nameValue,
+    //                     photo: photoValue,
+    //                 });
+    //             } else {
+    //                 await requestToken();
+    //             }
     //         }
     //     };
-    //     fetchInfo();
-    // }, [authToken]);
+    //     initialize();
+    // }, [loginClicked]);
+
+    useEffect(() => {
+        const fetchInfo = async () => {
+            if (authToken) {
+                const fetchedUserData = await getUserInfo(authToken);
+                setEmailInfo(fetchedUserData.email);
+                setProfileInfo({
+                    displayName: fetchedUserData.name,
+                    photo: fetchedUserData.picture,
+                });
+                console.log("profile", fetchedUserData);
+            }
+        };
+        fetchInfo();
+    }, [authToken]);
 
     return (
         <VideoLayout url={`${process.env.PUBLIC_URL}/server-room.MOV`}>
@@ -153,11 +153,19 @@ const Home = () => {
                                     },
                                 }}
                                 onClick={() => {
-                                    localStorage.setItem(
-                                        "loginClicked",
-                                        "true"
+                                    console.log(
+                                        "Clicking Start! and Now auth is:",
+                                        authToken
                                     );
-                                    setLoginClicked(true);
+                                    if (authToken) {
+                                        navigate(
+                                            `${process.env.REACT_APP_RESOURCE_PATH}/filter`
+                                        );
+                                    } else {
+                                        navigate(
+                                            `${process.env.REACT_APP_RESOURCE_PATH}/auth`
+                                        );
+                                    }
                                 }}
                             >
                                 Start →
@@ -253,11 +261,15 @@ const Home = () => {
                                         },
                                     }}
                                     onClick={() => {
-                                        localStorage.setItem(
-                                            "loginClicked",
-                                            "true"
+                                        console.log(
+                                            "Clicking Start! and Now auth is:",
+                                            authToken
                                         );
-                                        setLoginClicked(true);
+                                        if (authToken) {
+                                            navigate(`/filter`);
+                                        } else {
+                                            navigate(`/auth`);
+                                        }
                                     }}
                                 >
                                     Start →
