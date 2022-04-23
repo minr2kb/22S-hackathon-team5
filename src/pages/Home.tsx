@@ -15,7 +15,9 @@ const Home = () => {
     const setEmailInfo = useSetRecoilState(emailInfoAtom);
     const setProfileInfo = useSetRecoilState(profileInfoAtom);
     const [whypage, setWhypage] = useState(false);
-    const [loginClicked, setLoginClicked] = useState(false);
+    const [loginClicked, setLoginClicked] = useState(() => {
+        return localStorage.getItem("loginClicked") ? true : false;
+    });
 
     useEffect(() => {
         const initialize = async () => {
@@ -239,6 +241,10 @@ const Home = () => {
                                         },
                                     }}
                                     onClick={() => {
+                                        localStorage.setItem(
+                                            "loginClicked",
+                                            "true"
+                                        );
                                         setLoginClicked(true);
                                     }}
                                 >
