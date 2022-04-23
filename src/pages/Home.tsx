@@ -22,7 +22,6 @@ const Home = () => {
     useEffect(() => {
         const initialize = async () => {
             if (loginClicked) {
-                alert(loca.hash);
                 if (loca.hash) {
                     const hash = loca.hash.substring(1);
                     console.log(hash);
