@@ -7,6 +7,7 @@ import { authTokenAtom } from "../recoils/auth";
 import { emailInfoAtom, profileInfoAtom } from "../recoils/emails";
 import { getUserInfo } from "../apis/getUserInfo";
 import { oauthSignIn } from "../utils/getAuthToken";
+import { requestToken } from "../utils/requestToken";
 
 const Home = () => {
     const navigate = useNavigate();
@@ -16,25 +17,55 @@ const Home = () => {
     const setEmailInfo = useSetRecoilState(emailInfoAtom);
     const setProfileInfo = useSetRecoilState(profileInfoAtom);
     const [whypage, setWhypage] = useState(false);
+    const [loginClicked, setLoginClicked] = useState(false);
 
     useEffect(() => {
-        if (loca.hash) {
-            const hash = loca.hash.substring(1);
-            console.log(hash);
-            const matchedStr = hash.match(/access_token=.*?&/);
-            const accStr = matchedStr ? matchedStr[0] : "";
-            console.log(accStr);
-            const accList = accStr.split("=");
-            const accessTokenValue = accList[1].substring(
-                0,
-                accList[1].length - 1
-            );
-            setAuthToken(accessTokenValue);
-            localStorage.setItem("access", accessTokenValue);
-        } else {
-            oauthSignIn();
-        }
-    }, []);
+        const initialize = async () => {
+            if (loginClicked) {
+                if (loca.hash) {
+                    const hash = loca.hash.substring(1);
+                    console.log(hash);
+                    // accesstoken
+                    const matchedStr = hash.match(/access_token=.*?&/);
+                    const accStr = matchedStr ? matchedStr[0] : "";
+                    console.log(accStr);
+                    const accList = accStr.split("=");
+                    const accessTokenValue = accList[1].substring(
+                        0,
+                        accList[1].length - 1
+                    );
+                    setAuthToken(accessTokenValue);
+
+                    // name
+                    const matchedEmail = hash.match(/name=.*?&/);
+                    const matchedName = hash.match(/name=.*?&/);
+                    const matchedPhoto = hash.match(/photo=.*?&/);
+                    const matchedEmailStr = matchedEmail ? matchedEmail[0] : "";
+                    const matchedNameStr = matchedName ? matchedName[0] : "";
+                    const matchedPhotoStr = matchedPhoto ? matchedPhoto[0] : "";
+                    const emailList = matchedEmailStr.split("=");
+                    const nameList = matchedNameStr.split("=");
+                    const photoList = matchedPhotoStr.split("=");
+                    const emailValue = emailList[1];
+                    const nameValue = nameList[1];
+                    const photoValue = photoList[1];
+                    localStorage.setItem("access", accessTokenValue);
+                    localStorage.setItem("email", emailValue);
+                    localStorage.setItem("name", nameValue);
+                    localStorage.setItem("photo", photoValue);
+
+                    setEmailInfo(emailValue);
+                    setProfileInfo({
+                        displayName: nameValue,
+                        photo: photoValue,
+                    });
+                } else {
+                    await requestToken();
+                }
+            }
+        };
+        initialize();
+    }, [loginClicked]);
 
     useEffect(() => {
         const fetchInfo = async () => {

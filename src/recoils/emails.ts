@@ -7,10 +7,15 @@ export const emailListAtom = atom<any>({
 
 export const emailInfoAtom = atom<any>({
     key: "emailInfo",
-    default: ''
+    default: (()=> {return localStorage.getItem('email') ?? ''})()
 })
 
 export const profileInfoAtom = atom<any>({
     key: "profileInfo",
-    default: ''
+    default: (()=> {
+        return {
+            displayName: localStorage.getItem('name') ?? '',
+            photo: localStorage.getItem('photo') ?? ''
+        }
+    })()
 })
