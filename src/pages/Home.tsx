@@ -1,18 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Fade } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import VideoLayout from "../layout/VideoLayout";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { authTokenAtom } from "../recoils/auth";
 import { emailInfoAtom, profileInfoAtom } from "../recoils/emails";
 import { getUserInfo } from "../apis/getUserInfo";
+import { oauthSignIn } from "../utils/getAuthToken";
 
 const Home = () => {
     const navigate = useNavigate();
-    const authToken = useRecoilValue(authTokenAtom);
+    const [authToken, setAuthToken] = useRecoilState(authTokenAtom);
+    const loca = useLocation();
+    const navi = useNavigate();
     const setEmailInfo = useSetRecoilState(emailInfoAtom);
     const setProfileInfo = useSetRecoilState(profileInfoAtom);
     const [whypage, setWhypage] = useState(false);
+
+    useEffect(() => {
+        if (loca.hash) {
+            const hash = loca.hash.substring(1);
+            console.log(hash);
+            const matchedStr = hash.match(/access_token=.*?&/);
+            const accStr = matchedStr ? matchedStr[0] : "";
+            console.log(accStr);
+            const accList = accStr.split("=");
+            const accessTokenValue = accList[1].substring(
+                0,
+                accList[1].length - 1
+            );
+            setAuthToken(accessTokenValue);
+            localStorage.setItem("access", accessTokenValue);
+        } else {
+            oauthSignIn();
+        }
+    }, []);
 
     useEffect(() => {
         const fetchInfo = async () => {
