@@ -68,18 +68,7 @@ const Home = () => {
     }, [loginClicked]);
 
     useEffect(() => {
-        const fetchInfo = async () => {
-            if (authToken) {
-                const fetchedUserData = await getUserInfo(authToken);
-                setEmailInfo(fetchedUserData.email);
-                setProfileInfo({
-                    displayName: fetchedUserData.name,
-                    photo: fetchedUserData.picture,
-                });
-                console.log("profile", fetchedUserData);
-            }
-        };
-        fetchInfo();
+        console.log(authToken);
     }, [authToken]);
 
     return (
@@ -151,10 +140,6 @@ const Home = () => {
                                     },
                                 }}
                                 onClick={() => {
-                                    console.log(
-                                        "Clicking Start! and Now auth is:",
-                                        authToken
-                                    );
                                     if (authToken) {
                                         navigate(`/filter`);
                                     } else {
@@ -255,15 +240,7 @@ const Home = () => {
                                         },
                                     }}
                                     onClick={() => {
-                                        console.log(
-                                            "Clicking Start! and Now auth is:",
-                                            authToken
-                                        );
-                                        if (authToken) {
-                                            navigate(`/filter`);
-                                        } else {
-                                            navigate(`/auth`);
-                                        }
+                                        setLoginClicked(true);
                                     }}
                                 >
                                     Start →
