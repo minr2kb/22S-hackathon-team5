@@ -61,7 +61,7 @@ const SetFilters: React.FC<SetFiltersProps> = ({ handleNext }) => {
         setTimeout(() => {
             setLoading(false);
             handleNext();
-        }, 1000);
+        }, 300);
     };
 
     return (

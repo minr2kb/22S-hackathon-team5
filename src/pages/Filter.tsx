@@ -96,7 +96,7 @@ const Filter = () => {
                                     }}
                                 >
                                     <Avatar
-                                        src={profile?.photo?.url}
+                                        src={profile?.photo}
                                         sx={{ width: 32, height: 32 }}
                                     />
                                     <Typography sx={{ ml: 2, mr: 2 }}>

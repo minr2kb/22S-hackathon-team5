@@ -6,6 +6,8 @@ import Test from "./auth/Test";
 import Filter from "./pages/Filter";
 
 import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
+import Result from "./pages/Result";
 
 function App() {
     console.log(process.env.PUBLIC_URL);
@@ -17,7 +19,9 @@ function App() {
                     <Route path={`/filter`} element={<Filter />} />
                     <Route path={`/auth*`} element={<Auth />} />
                     <Route path={`/test`} element={<Test />} />
+                    <Route path={`/result`} element={<Result />} />
                 </Routes>
+                {/* <Route path={`*`} element={<NotFound />} /> */}
             </BrowserRouter>
         </RecoilRoot>
     );

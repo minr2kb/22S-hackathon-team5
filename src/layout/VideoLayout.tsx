@@ -3,10 +3,11 @@ import ReactPlayer from "react-player";
 import { Box } from "@mui/material";
 
 interface VideoLayoutProps {
+    url: string;
     children: JSX.Element;
 }
 
-const VideoLayout: React.FC<VideoLayoutProps> = ({ children }) => {
+const VideoLayout: React.FC<VideoLayoutProps> = ({ url, children }) => {
     return (
         <>
             <Box
@@ -49,7 +50,7 @@ const VideoLayout: React.FC<VideoLayoutProps> = ({ children }) => {
                 playing
                 width="450vw"
                 height="120vh"
-                url={`${process.env.PUBLIC_URL}/server-room.MOV`}
+                url={url}
             ></ReactPlayer>
         </>
     );

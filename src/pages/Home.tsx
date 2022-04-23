@@ -30,13 +30,14 @@ const Home = () => {
     }, [authToken]);
 
     return (
-        <VideoLayout>
+        <VideoLayout url={`${process.env.PUBLIC_URL}/server-room.MOV`}>
             <Box
                 sx={{
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "end",
                     alignItems: "center",
+                    p: 3,
                 }}
             >
                 {!whypage && (

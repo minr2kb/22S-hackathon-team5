@@ -36,7 +36,9 @@ const Auth = () => {
     }, [accessToken]);
     return (
         <Box textAlign={"center"}>
-            <Typography variant="h4">Auth Waiting...</Typography>
+            <Typography variant="h5" sx={{ mt: "40vh" }}>
+                Auth Waiting...
+            </Typography>
         </Box>
     );
 };
