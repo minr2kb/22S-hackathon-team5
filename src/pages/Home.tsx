@@ -6,7 +6,6 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { authTokenAtom } from "../recoils/auth";
 import { emailInfoAtom, profileInfoAtom } from "../recoils/emails";
 import { getUserInfo } from "../apis/getUserInfo";
-import { getUserProfile } from "../apis/getUserProfile";
 
 const Home = () => {
     const navigate = useNavigate();

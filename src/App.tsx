@@ -14,7 +14,7 @@ function App() {
                 <Routes>
                     <Route path={`/`} element={<Home />} />
                     <Route path={`/filter`} element={<Filter />} />
-                    <Route path={`/auth`} element={<Auth />} />
+                    <Route path={`/auth*`} element={<Auth />} />
                     <Route path={`/test`} element={<Test />} />
                 </Routes>
             </BrowserRouter>
