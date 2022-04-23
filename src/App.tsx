@@ -17,11 +17,11 @@ function App() {
                 <Routes>
                     <Route path={`/`} element={<Home />} />
                     <Route path={`/filter`} element={<Filter />} />
-                    <Route path={`/auth*`} element={<Auth />} />
+                    <Route path={`/auth`} element={<Auth />} />
                     <Route path={`/test`} element={<Test />} />
                     <Route path={`/result`} element={<Result />} />
+                    <Route path={`*`} element={<NotFound />} />
                 </Routes>
-                {/* <Route path={`*`} element={<NotFound />} /> */}
             </BrowserRouter>
         </RecoilRoot>
     );
