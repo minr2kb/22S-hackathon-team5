@@ -23,6 +23,7 @@ const Home = () => {
         const initialize = async () => {
             if (loginClicked) {
                 if (loca.hash) {
+                    console.log(loca.hash);
                     const hash = loca.hash.substring(1);
                     console.log(hash);
                     // accesstoken
