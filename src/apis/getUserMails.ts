@@ -47,11 +47,11 @@ import axios from "axios";
 }
 
 const makeQuery = (userMailsQuery: UserMailsQuery, email: string, accessToken: string) => {
-    return `?q=subject:suny OR subject:korea&email=${email}&access_token=${accessToken}`
+    return `?q=subject:slack&email=${email}&access_token=${accessToken}`
 }
 
 export const getUserMails = async (userMailsQuery: UserMailsQuery, email: string, accessToken: string) => {
-    const d = await axios.get(`https://gmail.googleapis.com/gmail/v1/users/${email}/messages${makeQuery(userMailsQuery, email, accessToken)}`)
+    const d = await axios.get(`${process.env.REACT_APP_BACKEND}/gmail/mail-list${makeQuery(userMailsQuery, email, accessToken)}`)
     return d.data;
 }
 
