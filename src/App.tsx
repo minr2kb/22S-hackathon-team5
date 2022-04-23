@@ -8,6 +8,7 @@ import Filter from "./pages/Filter";
 import Home from "./pages/Home";
 
 function App() {
+    console.log(process.env.PUBLIC_URL);
     return (
         <RecoilRoot>
             <BrowserRouter basename={`${process.env.PUBLIC_URL}`}>
