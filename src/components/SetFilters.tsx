@@ -19,9 +19,9 @@ import {
     periodFilterRecoilAtom,
     senderFilterRecoilAtom,
     keywordFilterRecoilAtom,
-    filteredEmailsRecoilAtom,
     etcFilterRecoilAtom,
 } from "../recoils/filter";
+
 import { useRecoilState } from "recoil";
 
 interface SetFiltersProps {
@@ -39,9 +39,6 @@ const SetFilters: React.FC<SetFiltersProps> = ({ handleNext }) => {
         keywordFilterRecoilAtom
     );
     const [etcFilter, setEtcFilter] = useRecoilState(etcFilterRecoilAtom);
-    const [filteredEmails, setFilteredEmails] = useRecoilState(
-        filteredEmailsRecoilAtom
-    );
 
     const [senderInput, setSenderInput] = useState("");
     const [senderInputError, setSenderInputError] = useState(false);
@@ -181,7 +178,7 @@ const SetFilters: React.FC<SetFiltersProps> = ({ handleNext }) => {
                     </AccordionSummary>
                     <AccordionDetails sx={{ ml: 1, mb: 3 }}>
                         {senderFilter.map((sender: string, idx: number) => (
-                            <>
+                            <Box key={`sender-${idx}`}>
                                 <Chip
                                     label={sender}
                                     variant="outlined"
@@ -194,7 +191,7 @@ const SetFilters: React.FC<SetFiltersProps> = ({ handleNext }) => {
                                         )
                                     }
                                 />
-                            </>
+                            </Box>
                         ))}
 
                         {senderFilter.length > 0 && <br />}

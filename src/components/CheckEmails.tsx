@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Button } from "@mui/material";
 
 import {
     periodFilterRecoilAtom,
     senderFilterRecoilAtom,
     keywordFilterRecoilAtom,
-    filteredEmailsRecoilAtom,
 } from "../recoils/filter";
+import { emailListAtom, selectionModelAtom } from "../recoils/emails";
 import { useRecoilState } from "recoil";
 
 import { DataGrid, GridColDef, GridSelectionModel } from "@mui/x-data-grid";
@@ -14,12 +14,12 @@ import { DataGrid, GridColDef, GridSelectionModel } from "@mui/x-data-grid";
 const columns: GridColDef[] = [
     // { field: "id", headerName: "ID", width: 60 },
     {
-        field: "title",
+        field: "subject",
         headerName: "Title",
         width: 200,
     },
     {
-        field: "sender",
+        field: "from",
         headerName: "Sender",
         width: 180,
     },
@@ -30,37 +30,25 @@ const columns: GridColDef[] = [
     },
 
     {
-        field: "attachment",
+        field: "sizeEstimate",
         headerName: "Attachment",
         width: 110,
     },
     {
-        field: "read",
-        headerName: "Read",
+        field: "unread",
+        headerName: "Unread",
         width: 80,
     },
 ];
 
-const rows = [
-    {
-        id: 1,
-        sender: "kbmin1129@gmail.com",
-        title: "Regarding the Quiz1",
-        date: "2022-04-20",
-    },
-    {
-        id: 2,
-        sender: "kbmin1129@gmail.com",
-        title: "Regarding the Qui2",
-        date: "2022-04-20",
-    },
-    {
-        id: 3,
-        sender: "kbmin1129@gmail.com",
-        title: "Regarding the Quiz3",
-        date: "2022-04-20",
-    },
-];
+interface Email {
+    id: number;
+    from: string;
+    subject: string;
+    date: string;
+    sizeEstimate: number;
+    labelIds: string[];
+}
 
 interface CheckEmailsProps {
     handleNext: () => void;
@@ -71,15 +59,27 @@ const CheckEmails: React.FC<CheckEmailsProps> = ({
     handleNext,
     handleBack,
 }) => {
-    const [selectionModel, setSelectionModel] = useState<GridSelectionModel>(
-        Array.from(Array(4).keys())
-    );
+    const [emailList, setEmailList] = useRecoilState(emailListAtom);
+    const [selectionModel, setSelectionModel] =
+        useRecoilState(selectionModelAtom);
+
+    useEffect(() => {
+        setSelectionModel(emailList.map((email: Email) => email.id));
+    }, []);
 
     return (
         <>
             <Box sx={{ width: "100%", height: "55vh" }}>
                 <DataGrid
-                    rows={rows}
+                    rows={emailList.map((email: Email) => {
+                        return {
+                            ...email,
+                            date: new Date(email.date).toLocaleDateString(
+                                "en-US"
+                            ),
+                            unread: email.labelIds.includes("UNREAD"),
+                        };
+                    })}
                     columns={columns}
                     // pageSize={25}
                     rowsPerPageOptions={[100]}

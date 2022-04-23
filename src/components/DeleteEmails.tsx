@@ -11,6 +11,9 @@ import useInterval from "../utils/useInterval";
 import Confetti from "react-confetti";
 import { useNavigate } from "react-router-dom";
 
+import { selectionModelAtom } from "../recoils/emails";
+import { useRecoilState } from "recoil";
+
 interface DeleteEmailsProps {
     handleBack: () => void;
 }
@@ -34,6 +37,8 @@ function LinearProgressWithLabel(
 }
 
 const DeleteEmails: React.FC<DeleteEmailsProps> = ({ handleBack }) => {
+    const [selectionModel, setSelectionModel] =
+        useRecoilState(selectionModelAtom);
     const [progress, setProgress] = useState(10);
     const navigate = useNavigate();
 
@@ -119,9 +124,7 @@ const DeleteEmails: React.FC<DeleteEmailsProps> = ({ handleBack }) => {
 
                 <LoadingButton
                     onClick={() =>
-                        navigate(
-                            `${process.env.REACT_APP_RESOURCE_PATH}/result`
-                        )
+                        navigate(`/result?count=${selectionModel.length}`)
                     }
                     loading={progress < 100}
                     variant="contained"

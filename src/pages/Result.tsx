@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Fade } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import VideoLayout from "../layout/VideoLayout";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { authTokenAtom } from "../recoils/auth";
 import { emailInfoAtom, profileInfoAtom } from "../recoils/emails";
 import { getUserInfo } from "../apis/getUserInfo";
-// import { getUserProfile } from "../apis/getUserProfile";
 
 const Result = () => {
+    const [search, setSearch] = useSearchParams({ count: "0" });
     return (
         <VideoLayout url={`${process.env.PUBLIC_URL}/nature.MOV`}>
             <Box
@@ -29,16 +29,19 @@ const Result = () => {
                 >
                     <Box
                         sx={{
-                            mt: "30vh",
+                            mt: "20vh",
                             color: "white",
                             fontWeight: 700,
                             fontSize: "5rem",
-                            textAlign: "end",
+                            textAlign: "start",
                         }}
                     >
-                        More Emails, Bigger Footprint.
+                        You Reduced
                         <br />
-                        Let's Change That.
+                        {(
+                            Number(search.get("count")) * 35
+                        ).toLocaleString()}{" "}
+                        grams of CO2
                     </Box>
                 </Fade>
 
@@ -57,6 +60,18 @@ const Result = () => {
                             alignItems: "center",
                         }}
                     >
+                        <Box
+                            sx={{
+                                mt: 3,
+                                color: "white",
+                                fontWeight: 600,
+                                fontSize: "2rem",
+                                textAlign: "start",
+                            }}
+                        >
+                            Individuals Like You Can Make a Difference for the
+                            Future!
+                        </Box>
                         <Button
                             variant="outlined"
                             size="large"
@@ -75,23 +90,8 @@ const Result = () => {
                                     mt: 7,
                                 },
                             }}
-                            // onClick={() => {
-                            //     console.log(
-                            //         "Clicking Start! and Now auth is:",
-                            //         authToken
-                            //     );
-                            //     if (authToken) {
-                            //         navigate(
-                            //             `${process.env.REACT_APP_RESOURCE_PATH}/filter`
-                            //         );
-                            //     } else {
-                            //         navigate(
-                            //             `${process.env.REACT_APP_RESOURCE_PATH}/auth`
-                            //         );
-                            //     }
-                            // }}
                         >
-                            Start →
+                            Share
                         </Button>
                     </Box>
                 </Fade>

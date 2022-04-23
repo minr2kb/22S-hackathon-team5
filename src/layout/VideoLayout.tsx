@@ -20,7 +20,7 @@ const VideoLayout: React.FC<VideoLayoutProps> = ({ url, children }) => {
                     color: "rgba(255,255,255,0.8)",
                 }}
             >
-                2022 Spring Hackathon - team 5
+                2022 Spring SKCS Hackathon - team 5
             </Box>
             {children}
             <Box

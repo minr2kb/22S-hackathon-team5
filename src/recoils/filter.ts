@@ -24,11 +24,6 @@ export const keywordFilterRecoilAtom = atom<string[]>({
     default: [],
 });
 
-export const filteredEmailsRecoilAtom = atom<Email[]>({
-    key: "filteredEmailsRecoilAtom",
-    default: [],
-});
-
 export const etcFilterRecoilAtom = atom({
     key: "etcFilterRecoilAtom",
     default: { unread: false, attachment: false, permanent: false },
