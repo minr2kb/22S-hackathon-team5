@@ -22,7 +22,7 @@ const steps = ["Set Filters", "Check Emails", "Delete Emails"];
 
 const Filter = () => {
     const [activeStep, setActiveStep] = useState<number>(0);
-    const [profile, setProfile] = useRecoilState(profileInfoAtom);
+    const profile = useRecoilValue(profileInfoAtom);
     const authToken = useRecoilValue(authTokenAtom);
     const navi = useNavigate();
 

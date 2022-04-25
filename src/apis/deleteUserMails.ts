@@ -9,7 +9,7 @@ export const deleteUserMails = async (
     const d = await axios.post(
         `${process.env.REACT_APP_BACKEND}/gmail/mail-list/${
             directlyDelete ? "delete" : "trash"
-        }?access_token=${accessToken}`,
+        }?access_token=${accessToken}&email=${email}`,
         {
             body: {
                 mails,
