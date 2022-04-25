@@ -24,7 +24,7 @@ const Home = () => {
     useEffect(() => {
         const initialize = async () => {
             const hash = loca.hash;
-            if (searchParams ?? hash) {
+            if (hash) {
                 console.log("hash is", hash);
                 // const accessToken = searchParams.get("access_token");
                 // const name = searchParams.get("name");
