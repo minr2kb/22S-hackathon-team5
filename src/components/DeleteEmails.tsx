@@ -6,13 +6,16 @@ import {
     LinearProgressProps,
     Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useInterval from "../utils/useInterval";
 import Confetti from "react-confetti";
 import { useNavigate } from "react-router-dom";
 
-import { selectionModelAtom } from "../recoils/emails";
-import { useRecoilState } from "recoil";
+import { selectionModelAtom, emailInfoAtom } from "../recoils/emails";
+import { authTokenAtom } from "../recoils/auth";
+import { etcFilterRecoilAtom } from "../recoils/filter";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { deleteUserMails } from "../apis/deleteUserMails";
 
 interface DeleteEmailsProps {
     handleBack: () => void;
@@ -37,6 +40,9 @@ function LinearProgressWithLabel(
 }
 
 const DeleteEmails: React.FC<DeleteEmailsProps> = ({ handleBack }) => {
+    const emailInfo = useRecoilValue(emailInfoAtom);
+    const authToken = useRecoilValue(authTokenAtom);
+    const etcFilter = useRecoilValue(etcFilterRecoilAtom);
     const [selectionModel, setSelectionModel] =
         useRecoilState(selectionModelAtom);
     const [progress, setProgress] = useState(10);
@@ -48,6 +54,16 @@ const DeleteEmails: React.FC<DeleteEmailsProps> = ({ handleBack }) => {
         },
         progress < 100 ? 1000 : null
     );
+
+    useEffect(() => {
+        deleteUserMails(
+            emailInfo,
+            authToken,
+            selectionModel,
+            etcFilter.permanent
+        );
+        console.log(selectionModel);
+    }, []);
 
     return (
         <>

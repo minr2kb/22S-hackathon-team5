@@ -21,14 +21,20 @@ import {
     keywordFilterRecoilAtom,
     etcFilterRecoilAtom,
 } from "../recoils/filter";
+import { authTokenAtom } from "../recoils/auth";
+import { emailInfoAtom, emailListAtom } from "../recoils/emails";
 
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { getUserMails, UserMailsQuery } from "../apis/getUserMails";
 
 interface SetFiltersProps {
     handleNext: () => void;
 }
 
 const SetFilters: React.FC<SetFiltersProps> = ({ handleNext }) => {
+    const emailInfo = useRecoilValue(emailInfoAtom);
+    const authToken = useRecoilValue(authTokenAtom);
+    const [emailList, setEmailList] = useRecoilState(emailListAtom);
     const [periodFilter, setPeriodFilter] = useRecoilState(
         periodFilterRecoilAtom
     );
@@ -55,10 +61,25 @@ const SetFilters: React.FC<SetFiltersProps> = ({ handleNext }) => {
 
     const handleFilter = () => {
         setLoading(true);
-        setTimeout(() => {
+        const userMailsQuery: UserMailsQuery = {
+            from: periodFilter.start,
+            to: periodFilter.end,
+            senders: senderFilter,
+            keywords: keywordFilter,
+            isUnread: etcFilter.unread,
+            hasAttachment: etcFilter.attachment,
+        };
+
+        getUserMails(userMailsQuery, emailInfo, authToken).then((res) => {
+            setEmailList(res);
             setLoading(false);
             handleNext();
-        }, 300);
+        });
+
+        // setTimeout(() => {
+        //     setLoading(false);
+        //     handleNext();
+        // }, 300);
     };
 
     return (
@@ -80,11 +101,7 @@ const SetFilters: React.FC<SetFiltersProps> = ({ handleNext }) => {
                             label="start date"
                             control={
                                 <Checkbox
-                                    checked={
-                                        periodFilter.start !== null
-                                            ? true
-                                            : false
-                                    }
+                                    checked={periodFilter.start ? true : false}
                                     onChange={(
                                         e: React.ChangeEvent<HTMLInputElement>
                                     ) => {
@@ -92,14 +109,14 @@ const SetFilters: React.FC<SetFiltersProps> = ({ handleNext }) => {
                                             ...periodFilter,
                                             start: e.target.checked
                                                 ? "2022-04-23"
-                                                : null,
+                                                : undefined,
                                         });
                                     }}
                                 />
                             }
                         />
                         <br />
-                        {periodFilter.start !== null && (
+                        {periodFilter.start && (
                             <>
                                 <TextField
                                     id="date"
@@ -125,9 +142,7 @@ const SetFilters: React.FC<SetFiltersProps> = ({ handleNext }) => {
                             label="end date"
                             control={
                                 <Checkbox
-                                    checked={
-                                        periodFilter.end !== null ? true : false
-                                    }
+                                    checked={periodFilter.end ? true : false}
                                     onChange={(
                                         e: React.ChangeEvent<HTMLInputElement>
                                     ) => {
@@ -135,14 +150,14 @@ const SetFilters: React.FC<SetFiltersProps> = ({ handleNext }) => {
                                             ...periodFilter,
                                             end: e.target.checked
                                                 ? "2022-04-23"
-                                                : null,
+                                                : undefined,
                                         });
                                     }}
                                 />
                             }
                         />
                         <br />
-                        {periodFilter.end !== null && (
+                        {periodFilter.end && (
                             <TextField
                                 id="date"
                                 label="To"

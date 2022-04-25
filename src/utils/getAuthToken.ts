@@ -1,8 +1,8 @@
-
 const data: { [key: string]: string } = {
     client_id:
         "974951979749-1nj8kbls25sbdjfeu69noa9r7hdpqqmd.apps.googleusercontent.com",
-    redirect_uri: `${process.env.REACT_APP_ORIGIN_URL}/22S-hackathon-team5/auth`,
+    // redirect_uri: `${process.env.REACT_APP_ORIGIN_URL}/22S-hackathon-team5/auth`,
+    redirect_uri: `${process.env.REACT_APP_REDIRECT_URI}`,
     response_type: "token",
     state: "state_parameter_passthrough_value",
     scope: "https://mail.google.com https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
@@ -36,4 +36,4 @@ export const oauthSignIn = () => {
     // Add form to page and submit it to open the OAuth 2.0 endpoint.
     document.body.appendChild(form);
     form.submit();
-}
+};

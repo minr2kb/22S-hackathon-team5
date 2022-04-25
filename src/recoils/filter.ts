@@ -7,11 +7,11 @@ interface Email {
 }
 
 export const periodFilterRecoilAtom = atom<{
-    start: string | null;
-    end: string | null;
+    start: string | undefined;
+    end: string | undefined;
 }>({
     key: "periodFilterRecoilAtom",
-    default: { start: null, end: null },
+    default: { start: undefined, end: undefined },
 });
 
 export const senderFilterRecoilAtom = atom<string[]>({

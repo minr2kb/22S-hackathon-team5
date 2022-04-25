@@ -11,6 +11,8 @@ import { useRecoilState } from "recoil";
 
 import { DataGrid, GridColDef, GridSelectionModel } from "@mui/x-data-grid";
 
+import { getUserMails } from "../apis/getUserMails";
+
 const columns: GridColDef[] = [
     // { field: "id", headerName: "ID", width: 60 },
     {
@@ -31,7 +33,7 @@ const columns: GridColDef[] = [
 
     {
         field: "sizeEstimate",
-        headerName: "Attachment",
+        headerName: "Size",
         width: 110,
     },
     {
@@ -77,6 +79,7 @@ const CheckEmails: React.FC<CheckEmailsProps> = ({
                             date: new Date(email.date).toLocaleDateString(
                                 "en-US"
                             ),
+                            sizeEstimate: `${email.sizeEstimate} bytes`,
                             unread: email.labelIds.includes("UNREAD"),
                         };
                     })}
