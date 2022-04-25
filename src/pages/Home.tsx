@@ -10,46 +10,77 @@ import VideoLayout from "../layout/VideoLayout";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { authTokenAtom } from "../recoils/auth";
 import { emailInfoAtom, profileInfoAtom } from "../recoils/emails";
+import { getUserProfile } from "../apis/getUserProfile";
 
 const Home = () => {
     const navigate = useNavigate();
     const [authToken, setAuthToken] = useRecoilState(authTokenAtom);
     const [searchParams, _setSearchParams] = useSearchParams();
     const setEmailInfo = useSetRecoilState(emailInfoAtom);
-    const setProfileInfo = useSetRecoilState(profileInfoAtom);
+    const [profileInfo, setProfileInfo] = useRecoilState(profileInfoAtom);
     const [whypage, setWhypage] = useState(false);
+    const loca = useLocation();
 
     useEffect(() => {
         const initialize = async () => {
-            if (searchParams) {
-                const accessToken = searchParams.get("access_token");
-                const name = searchParams.get("name");
-                const picture = searchParams.get("picture");
-                const email = searchParams.get("email");
-                if (accessToken && name && picture && email) {
+            const hash = loca.hash;
+            if (searchParams ?? hash) {
+                console.log("hash is", hash);
+                // const accessToken = searchParams.get("access_token");
+                // const name = searchParams.get("name");
+                // const picture = searchParams.get("picture");
+                // const email = searchParams.get("email");
+                // accesstoken
+                const matchedAccStr = hash.match(/access_token=.*?&/);
+                const accStr = matchedAccStr ? matchedAccStr[0] : "";
+                console.log(accStr);
+                const accList = accStr.split("=");
+                const accessToken = accList[1].substring(
+                    0,
+                    accList[1].length - 1
+                );
+
+                if (accessToken) {
                     setAuthToken(accessToken);
-                    setEmailInfo(email);
-                    setProfileInfo({
-                        displayName: name,
-                        photo: picture,
-                    });
+
                     // 로컬스토리지
                     localStorage.setItem("access", accessToken);
-                    localStorage.setItem("googleName", name);
-                    localStorage.setItem("googleEmail", email);
-                    localStorage.setItem("googlePicture", picture);
                 } else {
                     console.table({
                         accessToken,
-                        name,
-                        picture,
-                        email,
                     });
                 }
             }
         };
         initialize();
     }, []);
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const userInfo = await getUserProfile(authToken);
+
+                if (authToken) {
+                    setEmailInfo(userInfo.email);
+                    setProfileInfo({
+                        displayName: userInfo.name,
+                        photo: userInfo.picture,
+                    });
+                    if (userInfo) {
+                        localStorage.setItem("googleEmail", userInfo.email);
+                        localStorage.setItem("googleName", userInfo.name);
+                        localStorage.setItem("googlePicture", userInfo.picture);
+                    }
+                }
+            } catch (e) {
+                console.log("Access token was expired");
+                console.log(e);
+                localStorage.setItem("access", "");
+                navigate("/");
+            }
+        };
+        fetchProfile();
+    }, [authToken]);
 
     return (
         <VideoLayout url={`${process.env.PUBLIC_URL}/server-room.MOV`}>
