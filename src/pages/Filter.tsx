@@ -16,6 +16,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { profileInfoAtom } from "../recoils/emails";
 import { authTokenAtom } from "../recoils/auth";
 import DeleteEmails from "../components/DeleteEmails";
+import { useNavigate } from "react-router-dom";
 
 const steps = ["Set Filters", "Check Emails", "Delete Emails"];
 
@@ -23,6 +24,7 @@ const Filter = () => {
     const [activeStep, setActiveStep] = useState<number>(0);
     const [profile, setProfile] = useRecoilState(profileInfoAtom);
     const authToken = useRecoilValue(authTokenAtom);
+    const navi = useNavigate();
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -93,6 +95,17 @@ const Filter = () => {
                                     sx={{
                                         display: "flex",
                                         alignItems: "center",
+                                    }}
+                                    onClick={() => {
+                                        // logout
+                                        localStorage.setItem("access", "");
+                                        localStorage.setItem("googleName", "");
+                                        localStorage.setItem("googleEmail", "");
+                                        localStorage.setItem(
+                                            "googlePicture",
+                                            ""
+                                        );
+                                        navi("/");
                                     }}
                                 >
                                     <Avatar

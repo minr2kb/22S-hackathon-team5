@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Fade } from "@mui/material";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+    Link,
+    useLocation,
+    useNavigate,
+    useSearchParams,
+} from "react-router-dom";
 import VideoLayout from "../layout/VideoLayout";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { authTokenAtom } from "../recoils/auth";
@@ -13,6 +18,7 @@ const Home = () => {
     const [authToken, setAuthToken] = useRecoilState(authTokenAtom);
     const loca = useLocation();
     const navi = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
     const setEmailInfo = useSetRecoilState(emailInfoAtom);
     const setProfileInfo = useSetRecoilState(profileInfoAtom);
     const [whypage, setWhypage] = useState(false);
@@ -20,70 +26,39 @@ const Home = () => {
         return localStorage.getItem("loginClicked") ? true : false;
     });
 
-    // useEffect(() => {
-    //     const initialize = async () => {
-    //         if (loginClicked) {
-    //             if (loca.hash) {
-    //                 console.log(loca.hash);
-    //                 const hash = loca.hash.substring(1);
-    //                 console.log(hash);
-    //                 // accesstoken
-    //                 const matchedStr = hash.match(/access_token=.*?&/);
-    //                 const accStr = matchedStr ? matchedStr[0] : "";
-    //                 console.log(accStr);
-    //                 const accList = accStr.split("=");
-    //                 const accessTokenValue = accList[1].substring(
-    //                     0,
-    //                     accList[1].length - 1
-    //                 );
-    //                 setAuthToken(accessTokenValue);
-
-    //                 // name
-    //                 const matchedEmail = hash.match(/name=.*?&/);
-    //                 const matchedName = hash.match(/name=.*?&/);
-    //                 const matchedPhoto = hash.match(/photo=.*?&/);
-    //                 const matchedEmailStr = matchedEmail ? matchedEmail[0] : "";
-    //                 const matchedNameStr = matchedName ? matchedName[0] : "";
-    //                 const matchedPhotoStr = matchedPhoto ? matchedPhoto[0] : "";
-    //                 const emailList = matchedEmailStr.split("=");
-    //                 const nameList = matchedNameStr.split("=");
-    //                 const photoList = matchedPhotoStr.split("=");
-    //                 const emailValue = emailList[1];
-    //                 const nameValue = nameList[1];
-    //                 const photoValue = photoList[1];
-    //                 localStorage.setItem("access", accessTokenValue);
-    //                 localStorage.setItem("email", emailValue);
-    //                 localStorage.setItem("name", nameValue);
-    //                 localStorage.setItem("photo", photoValue);
-
-    //                 setEmailInfo(emailValue);
-    //                 setProfileInfo({
-    //                     displayName: nameValue,
-    //                     photo: photoValue,
-    //                 });
-    //             } else {
-    //                 await requestToken();
-    //             }
-    //         }
-    //     };
-    //     initialize();
-    // }, [loginClicked]);
-
     useEffect(() => {
-        const fetchInfo = async () => {
-            if (authToken) {
-                const fetchedUserData = await getUserInfo(authToken);
-                setEmailInfo(fetchedUserData.email);
-                setProfileInfo({
-                    displayName: fetchedUserData.name,
-                    photo: fetchedUserData.picture,
-                });
-                console.log("profile", fetchedUserData);
-                localStorage.setItem("access", authToken);
+        const initialize = async () => {
+            if (searchParams) {
+                const accessToken = searchParams.get("access_token");
+                const name = searchParams.get("name");
+                const picture = searchParams.get("picture");
+                const email = searchParams.get("email");
+                if (accessToken && name && picture && email) {
+                    setAuthToken(accessToken);
+                    setEmailInfo(email);
+                    setProfileInfo({
+                        displayName: name,
+                        photo: picture,
+                    });
+                } else {
+                    console.table({
+                        accessToken,
+                        name,
+                        picture,
+                        email,
+                    });
+                    throw new Error(`The missing value(s) as accessToken`);
+                }
+
+                // 로컬스토리지
+                localStorage.setItem("access", accessToken);
+                localStorage.setItem("googleName", name);
+                localStorage.setItem("googleEmail", email);
+                localStorage.setItem("googlePicture", picture);
             }
         };
-        fetchInfo();
-    }, [authToken]);
+        initialize();
+    }, []);
 
     return (
         <VideoLayout url={`${process.env.PUBLIC_URL}/server-room.MOV`}>
