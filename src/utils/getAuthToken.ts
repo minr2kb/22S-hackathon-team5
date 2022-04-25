@@ -1,19 +1,17 @@
 const data: { [key: string]: string } = {
     client_id:
         "974951979749-1nj8kbls25sbdjfeu69noa9r7hdpqqmd.apps.googleusercontent.com",
-    // redirect_uri: `${process.env.REACT_APP_ORIGIN_URL}/22S-hackathon-team5/auth`,
     redirect_uri: `${process.env.REACT_APP_REDIRECT_URI}`,
     response_type: "token",
     state: "state_parameter_passthrough_value",
     scope: "https://mail.google.com https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
     include_granted_scopes: "true",
-    //   state: "pass-through value",
 };
 
 /*
  * Create form to request access token from Google's OAuth 2.0 server.
  */
-export const oauthSignIn = () => {
+export const oauth2SignIn = () => {
     // Google's OAuth 2.0 endpoint for requesting an access token
     const oauth2Endpoint = "https://accounts.google.com/o/oauth2/v2/auth";
 

@@ -1,17 +1,16 @@
 import { Box, Typography } from "@mui/material";
 import React, { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { authTokenAtom } from "../recoils/auth";
-import { oauthSignIn } from "../utils/getAuthToken";
-import { requestToken } from "../utils/requestToken";
+import { oauth2SignIn } from "../utils/getAuthToken";
 
 const Auth = () => {
     const [accessToken, setAccessToken] = useRecoilState(authTokenAtom);
     const navi = useNavigate();
 
     useEffect(() => {
-        requestToken();
+        oauth2SignIn();
     }, []);
     useEffect(() => {
         if (accessToken) {

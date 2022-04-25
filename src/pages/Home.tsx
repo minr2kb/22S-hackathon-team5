@@ -33,6 +33,11 @@ const Home = () => {
                         displayName: name,
                         photo: picture,
                     });
+                    // 로컬스토리지
+                    localStorage.setItem("access", accessToken);
+                    localStorage.setItem("googleName", name);
+                    localStorage.setItem("googleEmail", email);
+                    localStorage.setItem("googlePicture", picture);
                 } else {
                     console.table({
                         accessToken,
@@ -40,14 +45,7 @@ const Home = () => {
                         picture,
                         email,
                     });
-                    throw new Error(`The missing value(s) as accessToken`);
                 }
-
-                // 로컬스토리지
-                localStorage.setItem("access", accessToken);
-                localStorage.setItem("googleName", name);
-                localStorage.setItem("googleEmail", email);
-                localStorage.setItem("googlePicture", picture);
             }
         };
         initialize();
