@@ -40,7 +40,7 @@ export const selectionModelAtom = atom<any>({
 export const emailInfoAtom = atom<any>({
     key: "emailInfo",
     default: (() => {
-        return localStorage.getItem("email") ?? "";
+        return localStorage.getItem("googleEmail") ?? "";
     })(),
 });
 
@@ -48,8 +48,8 @@ export const profileInfoAtom = atom<any>({
     key: "profileInfo",
     default: (() => {
         return {
-            displayName: localStorage.getItem("name") ?? "",
-            photo: localStorage.getItem("photo") ?? "",
+            displayName: localStorage.getItem("googleName") ?? "",
+            photo: localStorage.getItem("googlePicture") ?? "",
         };
     })(),
 });

@@ -10,21 +10,14 @@ import VideoLayout from "../layout/VideoLayout";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { authTokenAtom } from "../recoils/auth";
 import { emailInfoAtom, profileInfoAtom } from "../recoils/emails";
-import { requestToken } from "../utils/requestToken";
-import { getUserInfo } from "../apis/getUserInfo";
 
 const Home = () => {
     const navigate = useNavigate();
     const [authToken, setAuthToken] = useRecoilState(authTokenAtom);
-    const loca = useLocation();
-    const navi = useNavigate();
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams, _setSearchParams] = useSearchParams();
     const setEmailInfo = useSetRecoilState(emailInfoAtom);
     const setProfileInfo = useSetRecoilState(profileInfoAtom);
     const [whypage, setWhypage] = useState(false);
-    const [loginClicked, setLoginClicked] = useState(() => {
-        return localStorage.getItem("loginClicked") ? true : false;
-    });
 
     useEffect(() => {
         const initialize = async () => {
