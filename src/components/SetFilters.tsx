@@ -108,7 +108,7 @@ const SetFilters: React.FC<SetFiltersProps> = ({ handleNext }) => {
                                         setPeriodFilter({
                                             ...periodFilter,
                                             start: e.target.checked
-                                                ? "2022-04-23"
+                                                ? "2022-04-25"
                                                 : undefined,
                                         });
                                     }}
@@ -149,7 +149,7 @@ const SetFilters: React.FC<SetFiltersProps> = ({ handleNext }) => {
                                         setPeriodFilter({
                                             ...periodFilter,
                                             end: e.target.checked
-                                                ? "2022-04-23"
+                                                ? "2022-04-26"
                                                 : undefined,
                                         });
                                     }}

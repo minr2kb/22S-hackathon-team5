@@ -47,7 +47,9 @@ const makeQuery = (
 ) => {
     const from = userMailsQuery.from ? `after:${userMailsQuery.from} ` : "";
     const to = userMailsQuery.to ? `before:${userMailsQuery.to} ` : "";
-    const hasAttachment = userMailsQuery.hasAttachment ? "has:attachment " : "";
+    const hasAttachment = userMailsQuery.hasAttachment
+        ? ""
+        : "!has:attachment ";
     const isUnread = userMailsQuery.isUnread ? "" : "is:read ";
     const keywords = `{${userMailsQuery.keywords?.join(" ")}} `;
     const senders = userMailsQuery.senders
